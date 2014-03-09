@@ -1,0 +1,20 @@
+body {
+	padding-top: 60px;
+}
+
+div#column_user_context {
+    float: left;
+    width: 250px;
+    background: lightblue;
+}
+
+div#column_more_content {
+    float: right;
+    width: 150px;
+    background: burlywood;
+}
+
+div#column_content {
+    margin-left: 260px;
+    margin-right: 160px;
+}

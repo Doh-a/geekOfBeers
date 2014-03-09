@@ -11,7 +11,15 @@
 |
 */
 
-Route::get('/', function()
+
+Route::controller('account','AccountController' );
+Route::get('/', 'HomeController@showIndex');
+
+Route::get('brasseries', function()
 {
-	return View::make('hello');
+	$brasseries = Brasserie::paginate(15);
+    
+	return View::make('brasserie/brasseriesListe')->with('brasseries', $brasseries);
 });
+
+Route::get('brasserie/{id}', 'BrasserieController@brasseriePresentation');

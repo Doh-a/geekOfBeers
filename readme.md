@@ -1,21 +1,47 @@
-## Laravel PHP Framework
+##Laravel 4 - Bootstrap Application (Stable)
 
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/version.png)](https://packagist.org/packages/laravel/framework) [![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.png)](https://packagist.org/packages/laravel/framework) [![Build Status](https://travis-ci.org/laravel/framework.png)](https://travis-ci.org/laravel/framework)
+This is a Laravel 4 Bootstrap Application that has Twitter Bootstrap 2.3.0 and a skeleton app on Laravel 4.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, and caching.
+Originally a fork of a repo by [brunogaspar](https://github.com/brunogaspar) that no longer exists.
 
-Laravel aims to make the development process a pleasing one for the developer without sacrificing application functionality. Happy developers make the best code. To this end, we've attempted to combine the very best of what we have seen in other web frameworks, including frameworks implemented in other languages, such as Ruby on Rails, ASP.NET MVC, and Sinatra.
+###How to install
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+	git clone git://github.com/andrew13/Laravel-4-Bootstrap.git laravel
+	cd laravel
+	curl -s http://getcomposer.org/installer | php
+	php composer.phar install
 
-## Official Documentation
+You might want to make [composer as an alias](http://andrewelkins.com/programming/php/setting-up-composer-globally-for-laravel-4/) for future ease of use.
 
-Documentation for the entire framework can be found on the [Laravel website](http://laravel.com/docs).
+Now that you have the Laravel 4 installed, you need to create a database for it and update the file ***app/config/database.php***
 
-### Contributing To Laravel
+-----
 
-**All issues and pull requests should be filed on the [laravel/framework](http://github.com/laravel/framework) repository.**
+###After that, run these commands to create and populate Users table:
+
+	php artisan migrate
+	php artisan db:seed
+
+-----
+
+### Make sure app/storage is writable by your web server.
+If permissions are set correctly:
+
+    chmod -R 775 app/storage
+
+Should work, if not try
+
+    chmod -R 777 app/storage
+
+-----
+
+Navigate to your Laravel 4 website and try to login with the default credentials:
+
+	email : test@test.com
+	password : test
+
+Create a new user at /account/register
 
 ### License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+This is open-sourced software license under the [MIT license](http://opensource.org/licenses/MIT)
