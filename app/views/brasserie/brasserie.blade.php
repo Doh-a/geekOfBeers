@@ -27,7 +27,7 @@ body {
 @section('more-content')
 <h2>Bi&egrave;res brass&eacute;es</h2>
 @foreach($bieres as $biere)
-	<p><a href="brasserie/{{ $biere->id_biere }}">{{ $biere->nom_biere }}</a></p>
+	{{ $biere }}
 @endforeach
 @stop
 

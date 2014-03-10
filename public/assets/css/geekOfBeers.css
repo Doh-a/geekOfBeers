@@ -4,17 +4,17 @@ body {
 
 div#column_user_context {
     float: left;
-    width: 250px;
+    width: 230px;
     background: lightblue;
 }
 
 div#column_more_content {
     float: right;
-    width: 150px;
+    width: 200px;
     background: burlywood;
 }
 
 div#column_content {
-    margin-left: 260px;
-    margin-right: 160px;
+    margin-left: 240px;
+    margin-right: 210px;
 }
