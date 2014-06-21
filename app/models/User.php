@@ -60,4 +60,15 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->email;
 	}
 
+	public function getAvatarId()
+	{
+		$avatars = Avatar::where('user_id', '=', $this->getKey())->orderBy('start_date', 'desc')->take(1)->get();
+		
+		foreach ($avatars as $avatar)
+		{
+			return $avatar->avatar_id;
+		}
+		
+		return -1;
+	}
 }

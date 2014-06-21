@@ -14,7 +14,7 @@ class Brasserie extends Eloquent {
 	
 	public function getBieres()
 	{
-		$bieres = Biere::where('brasserie', '=', $this->id_brasserie)>take(10)->get();
+		$bieres = Biere::where('brasserie', '=', $this->id_brasserie)->take(10)->get();
 		
 		foreach ($bieres as $biere)
 		{

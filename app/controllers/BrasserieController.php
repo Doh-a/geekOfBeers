@@ -12,10 +12,10 @@ class BrasserieController extends BaseController
 		
 		$bieres = Biere::where('brasserie', '=', $brasserie_id)->get();
 		
-		 foreach ($bieres as $tmpBiere) {
+		foreach ($bieres as $tmpBiere) {
 			$bieresShortView[] = View::make('biere/biere_short_view', array('biere' => $tmpBiere));
 		}
-		   
+		
 		return View::make('brasserie/brasserie', array('bieres' => $bieresShortView, 'brasserie' => $brasserie));
     }
 

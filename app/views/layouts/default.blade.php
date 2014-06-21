@@ -42,31 +42,34 @@
 
 	<body>
 		<!-- Navbar -->
-		<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<div class="navbar-header">
+					  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
-					</a>
+					  </button>
+					</div>
 
-					<div class="nav-collapse collapse">
-						<ul class="nav pull-left">
+					<div class="navbar-collapse collapse">
+						<ul class="nav navbar-nav pull-left">
 							<li {{{ (Request::is('/') ? 'class="active"' : '') }}}><a href="{{{ URL::to('') }}}">Geek of beers</a></li>
 						</ul>
 						
-						<ul class="nav">
+						<ul class="nav navbar-nav">
 							<li {{{ (Request::is('/') ? 'class="active"' : '') }}}><a href="{{{ URL::to('') }}}">Bi&egrave;res</a></li>
 							<li {{{ (Request::is('/') ? 'class="active"' : '') }}}><a href="{{{ URL::to('brasseries') }}}">Brasseries</a></li>
-							<li {{{ (Request::is('/') ? 'class="active"' : '') }}}><a href="{{{ URL::to('') }}}">Ajouter</a></li>
+							<li {{{ (Request::is('/') ? 'class="active"' : '') }}}><a href="{{{ URL::to('add') }}}">Ajouter</a></li>
 							@if (Auth::check())
 							<li {{{ (Request::is('/') ? 'class="active"' : '') }}}><a href="{{{ URL::to('') }}}">Suggestions</a></li>
 							<li {{{ (Request::is('/') ? 'class="active"' : '') }}}><a href="{{{ URL::to('') }}}">Amis</a></li>
 							@endif
 						</ul>
 
-						<ul class="nav pull-right">
+						<ul class="nav navbar-nav pull-right">
 							@if (Auth::check())
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->fullName() }} <b class="caret"></b></a>
@@ -115,5 +118,7 @@
 		================================================== -->
 		<script src="{{{ asset('assets/js/jquery.v1.8.3.min.js') }}}"></script>
 		<script src="{{{ asset('assets/js/bootstrap/bootstrap.min.js') }}}"></script>
+		
+		@yield('footer-scripts')
 	</body>
 </html>

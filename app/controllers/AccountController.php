@@ -69,7 +69,8 @@ class AccountController extends AuthorizedController
 			// Create the user.
 			//
 			$user =  User::find(Auth::user()->id);
-			$user->username = Input::get('username');
+			$user->first_name = Input::get('first_name');
+			$user->last_name  = Input::get('last_name');
 			$user->email      = Input::get('email');
 
 			if (Input::get('password') !== '')
@@ -189,7 +190,8 @@ class AccountController extends AuthorizedController
 		// Declare the rules for the form validation.
 		//
 		$rules = array(
-			'username'            => 'Required',
+			'first_name'            => 'Required',
+			'last_name'             => 'Required',
 			'email'                 => 'Required|Email|Unique:users',
 			'password'              => 'Required|Confirmed',
 			'password_confirmation' => 'Required'
@@ -210,7 +212,8 @@ class AccountController extends AuthorizedController
 			// Create the user.
 			//
 			$user = new User;
-			$user->username   = Input::get('username');
+			$user->first_name = Input::get('first_name');
+			$user->last_name  = Input::get('last_name');
 			$user->email      = Input::get('email');
 			$user->password   = Hash::make(Input::get('password'));
 			$user->save();

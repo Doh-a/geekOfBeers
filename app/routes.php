@@ -23,3 +23,16 @@ Route::get('brasseries', function()
 });
 
 Route::get('brasserie/{id}', 'BrasserieController@brasseriePresentation');
+Route::get('biere/{id}', 'BiereController@bierePresentation');
+
+Route::get('userBiere/{biereId}/{userId}/{newNote}', 'BiereUserController@rateBiere');
+
+Route::get('add', 'BiereController@addForm');
+Route::post('add', array(
+	'before' => 'csrf',
+	'as' => 'add.biere',
+	'uses' => 'BiereController@addBiere')
+	);
+
+//AJAX
+Route::get( '/brasseriesUser/{brasserieId}/{userId}', 'BrasserieUserController@bieresTestee' );

@@ -17,6 +17,18 @@ class Biere extends Eloquent {
 		return Couleur::find($this->couleur);
 	}
 	
+	//Get the name of the fermentation :
+	public function fermentation()
+	{
+		return Fermentation::find($this->fermentation);
+	}
+	
+	//Get the name of the maltage :
+	public function maltage()
+	{
+		return Maltage::find($this->maltage);
+	}
+	
 	//Get the name of the american classification :
 	public function typeAmericain()
 	{
@@ -30,4 +42,9 @@ class Biere extends Eloquent {
 		return TypeBelge::find($this->type2);
 	}
 	
+	//Get the name of the american classification :
+	public function brasserie()
+	{
+		return Brasserie::find($this->brasserie);
+	}
 }
