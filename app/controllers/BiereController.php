@@ -78,25 +78,47 @@ class BiereController extends BaseController
 		$newBeerId = $biere->id_biere;
 		
 		//TODO : rediriger vers la page biere avec une confirmation de l'ajout
-		$biereUser = UserBiere::where("id_user", "=", Auth::user()->getAuthIdentifier())->where("id_biere", "=", $newBeerId)->first();
-	
-		if($biereUser == null)
-		{
-			$biereUser = new UserBiere;
-			$biereUser->note_biere = -1;
-		}
-	
-		return View::make('biere/presentation', array('biere' => $biere, 'biereUser' => $biereUser));
+		$this->bierePresentation($newBeerId);
 	}
 	
 	public function bierePresentation($biere_id)
 	{
 		$biere = Biere::find($biere_id); 
 		
-		//TODO : utiliser la vrai id user
-		$biereUser = UserBiere::where("id_user", "=", Auth::user()->getAuthIdentifier())->where("id_biere", "=", $biere_id)->first();
-	
-		return View::make('biere/presentation', array('biere' => $biere, 'biereUser' => $biereUser));
+		//Get the user feedback about this beer
+		if(Auth::user())
+			$biereUser = UserBiere::where("id_user", "=", Auth::user()->getAuthIdentifier())->where("id_biere", "=", $biere_id)->first();
+		else
+			$biereUser = null;
+			
+		//Get the community notations about this beer
+		$biereRates = DB::table('user_biere')
+                     ->select(DB::raw('note_biere, count(*) as rate_count'))
+                     ->groupBy('note_biere')
+					 ->where('id_biere', '=', $biere_id)
+                     ->get();
+		
+		$biereFinalRates = array(0,0,0,0,0,0);
+		$biereFinalPercents = array(0,0,0,0,0,0);
+		$totalVotes = 0;
+		$totalPoints = 0;
+		
+		foreach($biereRates as $tmpRate)
+		{
+			$biereFinalRates[$tmpRate->note_biere] += $tmpRate->rate_count;
+			$totalVotes += $tmpRate->rate_count;
+			$totalPoints += $tmpRate->rate_count * $tmpRate->note_biere;
+		}
+		
+		for($i = 0; $i < 5; $i++)
+			if($totalVotes > 0)
+				$biereFinalPercents[$i+1] = round($biereFinalRates[$i+1] / $totalVotes * 100);
+		
+		$biereAverageRate = 0;
+		if($totalVotes > 0)
+			$biereAverageRate = round($totalPoints/$totalVotes, 2);
+		
+		return View::make('biere/presentation', array('biere' => $biere, 'biereUser' => $biereUser, 'biereAverageRate' => $biereAverageRate, 'biereTotalVotes' => $totalVotes, 'biereRates' => $biereFinalRates, 'bierePercents' => $biereFinalPercents));
 	}
 }
 

@@ -26,8 +26,14 @@ body {
 				<div id="user-context-content">
 					<h2>Votre note : </h2>
 					<div class="rating" style="font-size:2em;">
-						<span class="rating-num" id="user_rate_num">{{ $biereUser->note_biere }}</span>
-						<input class="rating" data-max="5" data-min="1" data-clearable="&nbsp;" data-empty-value="-1" id="user-rating" name="user-rating" type="number" value="{{ round($biereUser->note_biere) }}" />
+						<span class="rating-num" id="user_rate_num">
+						@if($biereUser != null)
+							{{ $biereUser->note_biere }}
+						@else
+							Non not&eacute;e
+						@endif
+						</span>
+						<input class="rating" data-max="5" data-min="1" data-clearable="&nbsp;" data-empty-value="-1" id="user-rating" name="user-rating" type="number" @if($biereUser != null) value="{{ round($biereUser->note_biere) }}" @endif />
 					</div>
 					<br style="clear:both" />
 					<h2>Votre commentaire : </h2>
@@ -82,9 +88,9 @@ body {
 				<div class="rate-container">
 				  <div class="rate-inner">
 					<div class="rating">
-					  <span class="rating-num">4.0</span>
+					  <span class="rating-num">{{ $biereAverageRate }}</span>
 					  <div class="rating-users">
-						<i class="icon-user"></i> 1,014,004 total
+						<i class="icon-user"></i> {{ $biereTotalVotes }} total
 					  </div>
 					</div>
 					
@@ -94,7 +100,7 @@ body {
 						  <i class="active icon-star"></i> 5           </span>
 						<span class="bar-block">
 						  <span id="bar-five" class="bar">
-							<span>566,784</span>&nbsp;
+							<span>{{ $biereRates[5] }}</span>&nbsp;
 						  </span> 
 						</span>
 					  </div>
@@ -104,7 +110,7 @@ body {
 						  <i class="active icon-star"></i> 4           </span>
 						<span class="bar-block">
 						  <span id="bar-four" class="bar">
-							<span>171,298</span>&nbsp;
+							<span>{{ $biereRates[4] }}</span>&nbsp;
 						  </span> 
 						</span>
 					  </div> 
@@ -114,7 +120,7 @@ body {
 						  <i class="active icon-star"></i> 3           </span>
 						<span class="bar-block">
 						  <span id="bar-three" class="bar">
-							<span>94,940</span>&nbsp;
+							<span>{{ $biereRates[3] }}</span>&nbsp;
 						  </span> 
 						</span>
 					  </div>
@@ -124,7 +130,7 @@ body {
 						  <i class="active icon-star"></i> 2           </span>
 						<span class="bar-block">
 						  <span id="bar-two" class="bar">
-							<span>44,525</span>&nbsp;
+							<span>{{ $biereRates[2] }}</span>&nbsp;
 						  </span> 
 						</span>
 					  </div>
@@ -134,7 +140,7 @@ body {
 						  <i class="active icon-star"></i> 1           </span>
 						<span class="bar-block">
 						  <span id="bar-one" class="bar">
-							<span>136,457</span>&nbsp;
+							<span>{{ $biereRates[1] }}</span>&nbsp;
 						  </span> 
 						</span>
 					  </div>
@@ -148,7 +154,6 @@ body {
 @stop
 
 @section('footer-scripts')
-@if (Auth::check())
 <script src="../assets/js/rating/bootstrap-rating-input.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -160,24 +165,24 @@ For stackoverflow question: http://stackoverflow.com/questions/17859134/how-do-i
 $(document).ready(function() {
   $('.bar span').hide();
   $('#bar-five').animate({
-     width: '75%'}, 1000);
+     width: '{{ $bierePercents[5] }}%'}, 1000);
   $('#bar-four').animate({
-     width: '35%'}, 1000);
+     width: '{{ $bierePercents[4] }}%'}, 1000);
   $('#bar-three').animate({
-     width: '20%'}, 1000);
+     width: '{{ $bierePercents[3] }}%'}, 1000);
   $('#bar-two').animate({
-     width: '15%'}, 1000);
+     width: '{{ $bierePercents[2] }}%'}, 1000);
   $('#bar-one').animate({
-     width: '30%'}, 1000);
-  
+     width: '{{ $bierePercents[1] }}%'}, 1000);
+ 
   setTimeout(function() {
     $('.bar span').fadeIn('slow');
   }, 1000);
-  
 });
 
+@if (Auth::check())
+
 $( "#user-rating" ).change(function() {
-	alert("toto");
 	$.getJSON( "../userBiere/{{ $biere->id_biere }}/{{ Auth::user()->getAuthIdentifier() }}/" + $( '#user-rating' ).val(), 
 		function(data)
 		{
@@ -188,7 +193,6 @@ $( "#user-rating" ).change(function() {
 		}
 	)
 });
-
-</script>
 @endif
+</script>
 @stop

@@ -22,7 +22,19 @@ Route::get('brasseries', function()
 	return View::make('brasserie/brasseriesListe')->with('brasseries', $brasseries);
 });
 
+//Brasserie
 Route::get('brasserie/{id}', 'BrasserieController@brasseriePresentation');
+Route::get('brasseriesComments/{id}/{number}/{from}', 'BrasserieController@brasserieComments');
+
+Route::get('brasserieFanAction/{id}/{status}', 'BrasserieUserController@brasserieFan');
+Route::get('brasserieUserDeleteComment/{id}', 'BrasserieUserController@brasserieDeleteComment');
+Route::post( 'brasserie', array(
+    'as' => 'brewery.new_comment',
+    'uses' => 'BrasserieUserController@brasserieNewComment'
+) );
+
+
+//Biere
 Route::get('biere/{id}', 'BiereController@bierePresentation');
 
 Route::get('userBiere/{biereId}/{userId}/{newNote}', 'BiereUserController@rateBiere');
@@ -36,3 +48,6 @@ Route::post('add', array(
 
 //AJAX
 Route::get( '/brasseriesUser/{brasserieId}/{userId}', 'BrasserieUserController@bieresTestee' );
+
+//Users
+Route::get('user/{id}', 'UserController@userPresentation');
